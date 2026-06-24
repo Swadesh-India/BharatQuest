@@ -1,0 +1,230 @@
+{% extends "base.html" %} {% load static %} {% block title %} BharatQues Blogs —
+Discover Stories, Ideas & Insights {% endblock %} {% block maincss %}
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- Custom Blog CSS -->
+<link rel="stylesheet" href="{% static 'styles/blog.css' %}?v=1.11" />
+
+<script src="https://unpkg.com/lucide@latest"></script>
+{% endblock %} {% block main %}
+<div class="nav-actions">
+  <!-- Write Blog Button redirecting to specific URL from URLs.py -->
+  <a href="{% url 'add_blog' %}" class="btn btn-write">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="24px"
+      viewBox="0 -960 960 960"
+      width="24px"
+      fill="#f5f5f5"
+    >
+      <path
+        d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
+      />
+    </svg>
+    Write a Blog
+  </a>
+  <button class="btn-icon" style="display: none">
+    <i data-lucide="menu"></i>
+  </button>
+</div>
+
+<main class="container">
+  <header class="hero">
+    <div class="badge"><span class="dot"></span> BHARATQUEST READING ROOM</div>
+
+    <h1 class="main-title">
+      Discover Stories,<br /><i style="font-weight: lighter">Ideas</i> &
+      Insights.
+    </h1>
+
+    <p class="subtitle">
+      Explore thoughtful articles written by the BharatQuest community — curated
+      for the calm, curious reader.
+    </p>
+  </header>
+  <div class="showcase-container">
+    {% if featured_blogs %}
+    <section class="featured-section">
+      <span class="section-tag">Featured Editorial</span>
+
+      {% for blog in featured_blogs|slice:":1" %}
+      <article class="featured-grid featured-card">
+        <a
+          href="{% url 'blog_detail' blog.id blog.slug %}"
+          class="img-container"
+        >
+          {% if blog.cover_image %}
+          <img src="{{ blog.cover_image.url }}" alt="{{ blog.blog_title }}" />
+          {% else %}
+          <div class="empty-image">No Cover Image</div>
+          {% endif %}
+        </a>
+
+        <div class="featured-content">
+          <span class="category-tag">{{ blog.get_category_display }}</span>
+          <h2 class="featured-title">
+            <a href="{% url 'blog_detail' blog.id blog.slug %}"
+              >{{ blog.blog_title }}</a
+            >
+          </h2>
+          <p class="featured-excerpt line-clamp-3">{{ blog.blog_summary }}</p>
+
+          <!-- Hashtags for Featured Blog -->
+          {% if blog.tags %}
+          <div class="hashtag-container">
+            {% for tag in blog.tags|slice:":4" %}
+            <span class="hashtag">#{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="meta-info">
+            <!-- Author Avatar -->
+            <div class="author-avatar-small">
+              <img src="{{ blog.author.profile.avatar.url }}" alt="Avatar">
+            </div>
+            <strong
+              >{{ blog.author.fullname|default:blog.author.username }}</strong
+            >
+            <span class="meta-dot"></span>
+
+            <!-- DYNAMIC TIME STAMP (Injected via your utility) -->
+            <div
+              class="slide-time-stamp"
+              data-date='{{ blog.created_at|date:"c"}}'
+            ></div>
+
+            <span class="meta-dot"></span>
+            <span class="meta-icon"
+              ><i data-lucide="eye"></i> {{ blog.views }}</span
+            >
+          </div>
+
+          <div class="action-row">
+            <a
+              href="{% url 'blog_detail' blog.id blog.slug %}"
+              class="btn btn-primary"
+              >Read Article</a>
+           
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    <!-- Bottom: Trending Reads -->
+    {% if other_blogs %}
+    <section class="trending-section">
+      <div class="section-header">
+        <h3 class="section-title">Trending Reads</h3>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="trending-grid">
+        {% for blog in other_blogs %}
+        <article class="trending-card">
+          <!-- Edge-to-edge thumbnail for Trending -->
+          <a
+            href="{% url 'blog_detail' blog.id blog.slug %}"
+            class="trending-img-container"
+          >
+            {% if blog.cover_image %}
+            <img src="{{ blog.cover_image.url }}" alt="{{ blog.blog_title }}" />
+            {% else %}
+            <div class="empty-image">No Cover Image</div>
+            {% endif %}
+          </a>
+
+          <div class="trending-content">
+            <div class="trending-header">
+              <span class="category-tag bg-transparent border-none p-0 mb-0"
+                >{{ blog.get_category_display }}</span
+              >
+              <span class="meta-icon trending-views"
+                ><i data-lucide="trending-up"></i> {{ blog.views }}</span
+              >
+            </div>
+            <h4 class="trending-title line-clamp-2">
+              <a href="{% url 'blog_detail' blog.id blog.slug %}"
+                >{{ blog.blog_title }}</a
+              >
+            </h4>
+            <p class="trending-excerpt line-clamp-2">{{ blog.blog_summary }}</p>
+
+            <!-- Hashtags for Trending Cards -->
+            {% if blog.tags %}
+            <div class="hashtag-container">
+              {% for tag in blog.tags|slice:":3" %}
+              <span class="hashtag">#{{ tag }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="trending-footer">
+            <!-- Author Info with Avatar -->
+            <div class="author-info-small">
+              <div class="author-avatar-small">
+               <img src="{{ blog.author.profile.avatar.url }}" alt="Avatar">
+              </div>
+              <span>By <strong>{{ blog.author.username }}</strong></span>
+            </div>
+
+            <!-- DYNAMIC TIME STAMP (Injected via your utility) -->
+            <div
+              class="slide-time-stamp"
+              data-date='{{ blog.created_at|date:"c"}}'
+            ></div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+  </div>
+</main>
+{% endblock %} {% block mainjs %}
+
+<script type="text/javascript">
+
+
+  function relativeTime(date) {
+    const now = new Date();
+    const then = new Date(date);
+    const timePassed = (now - then) / 1000 / 3600;
+
+    if (timePassed < 1 / 60) {
+      return "just now";
+    } else if (timePassed < 1) {
+      return `${Math.floor(timePassed * 60)} min ago`;
+    } else if (timePassed <= 24) {
+      return `${Math.floor(timePassed)} hours ago`;
+    } else if (timePassed <= 48) {
+      return "yesterday";
+    } else if (timePassed < 24 * 7) {
+      return `${Math.floor(timePassed / 24)} days ago`;
+    } else if (timePassed <= 24 * 30) {
+      return `${Math.floor(timePassed / 24 / 7)} ${Math.floor(timePassed / 24 / 7) == 1 ? "week" : "weeks"} ago`;
+    } else if (timePassed <= 365 * 24) {
+      return `${Math.floor(timePassed / 24 / 30)} ${Math.floor(timePassed / 24 / 30) == 1 ? "month" : "months"} ago`;
+    } else if (timePassed > 365 * 24) {
+      return `${Math.floor(timePassed / 24 / 365)} ${Math.floor(timePassed / 24 / 365) == 1 ? "year" : "years"} ago`;
+    }
+  }
+
+  const timeStamp = document.querySelectorAll(".slide-time-stamp");
+  Array.from(timeStamp).forEach((st) => {
+    st.innerText = relativeTime(st.dataset.date);
+  });
+</script>
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

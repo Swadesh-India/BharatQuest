@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activate Your Account</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f8;
+      font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      width: 100% !important;
+    "
+  >
+    <table
+      role="presentation"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      width="100%"
+      style="background-color: #f4f6f8; padding: 40px 10px"
+    >
+      <tr>
+        <td align="center">
+          <table
+            role="presentation"
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            width="100%"
+            style="
+              max-width: 600px;
+              background-color: #ffffff;
+              border-radius: 8px;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+              overflow: hidden;
+            "
+          >
+            <!-- Header Banner (Optional Color Strip) -->
+            <tr>
+              <td style="background-color: #4f46e5; height: 6px"></td>
+            </tr>
+
+            <!-- Main Content -->
+            <tr>
+              <td style="padding: 40px 50px; text-align: left">
+                <h2
+                  style="
+                    color: #1f2937;
+                    font-size: 24px;
+                    font-weight: 700;
+                    margin-top: 0;
+                    margin-bottom: 20px;
+                  "
+                >
+                  Welcome, {{ user.fullname }}!
+                </h2>
+
+                <p
+                  style="
+                    color: #4b5563;
+                    font-size: 16px;
+                    line-height: 1.6;
+                    margin-bottom: 24px;
+                  "
+                >
+                  Thank you for registering an account with us. To complete your
+                  setup and ensure the security of your account, please verify
+                  your email address by clicking the button below:
+                </p>
+
+                <!-- CTA Button -->
+                <table
+                  role="presentation"
+                  border="0"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="margin: 30px 0"
+                >
+                  <tr>
+                    <td
+                      align="center"
+                      bgcolor="#4f46e5"
+                      style="border-radius: 6px"
+                    >
+                      <a
+                        href="http://{{ domain }}{% url 'activate' uidb=uid token=token %}"
+                        target="_blank"
+                        style="
+                          display: inline-block;
+                          padding: 14px 28px;
+                          font-family: Arial, sans-serif;
+                          font-size: 16px;
+                          font-weight: bold;
+                          color: #ffffff;
+                          text-decoration: none;
+                          border-radius: 6px;
+                          border: 1px solid #4f46e5;
+                        "
+                      >
+                        Activate Account
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p
+                  style="
+                    color: #6b7280;
+                    font-size: 14px;
+                    line-height: 1.5;
+                    margin-bottom: 30px;
+                  "
+                >
+                  <em
+                    >Note: This activation link is valid for a limited time and
+                    can only be used once.</em
+                  >
+                </p>
+
+                <hr
+                  style="
+                    border: 0;
+                    border-top: 1px solid #e5e7eb;
+                    margin-bottom: 30px;
+                  "
+                />
+
+                <!-- Fallback Link -->
+                <p
+                  style="
+                    color: #9ca3af;
+                    font-size: 13px;
+                    line-height: 1.5;
+                    margin-bottom: 0;
+                  "
+                >
+                  If the button above doesn't work, copy and paste this URL into
+                  your browser: <br />
+                  <a
+                    href="http://{{ domain }}{% url 'activate' uidb=uid token=token %}"
+                    style="
+                      color: #4f46e5;
+                      text-decoration: underline;
+                      word-break: break-all;
+                    "
+                    >Click here!</a
+                  >
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                style="
+                  background-color: #f9fafb;
+                  padding: 30px 50px;
+                  text-align: left;
+                  border-top: 1px solid #f3f4f6;
+                "
+              >
+                <p
+                  style="
+                    color: #6b7280;
+                    font-size: 14px;
+                    margin-top: 0;
+                    margin-bottom: 15px;
+                  "
+                >
+                  Best regards,<br />
+                  <strong>The Team</strong>
+                </p>
+                <p
+                  style="
+                    color: #9ca3af;
+                    font-size: 12px;
+                    margin: 0;
+                    line-height: 1.4;
+                  "
+                >
+                  If you did not create this account, you can safely ignore this
+                  email; no further action is required.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

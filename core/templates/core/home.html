@@ -1,0 +1,188 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome{% endblock %}
+{% block maincss %}
+<link rel="stylesheet" href="{% static 'styles/home.css' %}?v=1.12">
+{% endblock %}
+
+{% block main %}
+
+<main>
+    <section class="top-section">
+         
+
+        <section class="hero">
+            <div class="hero-slide-cont">
+    <div class="hero-overlay">
+                    <h1 class="overlay-title">
+                        Your Personal Quest for India's Living Bigins Now.
+                    </h1>
+                    <p class="overlay-subtitle">Dive deep, connect and contribute to tapestry of Indian culture. Explore New Horizons or Share Your Insights.</p>
+                </div>
+                <div id="hero-img1">
+                    <img src="{% static 'core/images/heroimages/TajMahal.jpg' %}" class="hero-img">
+                    <div class="hero-text">&bull; Ancient Monuments</div>
+                </div>
+
+                <div id="hero-img2">
+                    <img src="{% static 'core/images/heroimages/RedFort.jpg' %}" class="hero-img">
+                    <div class="hero-text">&bull; Ancient Monuments</div>
+                </div>
+
+                <div id="hero-img3">
+                    <img src="{% static 'core/images/heroimages/gwaliorFort.jpg' %}" class="hero-img">
+                    <div class="hero-text">&bull; Ancient Monuments</div>
+                </div>
+
+                <div id="hero-img4">
+                    <img src="{% static 'core/images/heroimages/Diwali.jpg' %}" class="hero-img">
+                    <div class="hero-text">&bull; Vibrant Festivals</div>
+                </div>
+
+                <div id="hero-img5">
+                    <img src="{% static 'core/images/heroimages/boatrace.jpg' %}" class="hero-img">
+                    <div class="hero-text">&bull; Diverse Culture</div>
+                </div>
+
+                <div id="hero-img6">
+                    <img src="{% static 'core/images/heroimages/humayuntomb.jpg' %}" class="hero-img">
+                    <div class="hero-text">&bull; Ancient Monuments</div>
+                </div>
+
+                <div id="hero-img7">
+                    <img src="{% static 'core/images/heroimages/boat.jpg' %}" class="hero-img">
+                    <div class="hero-text">&bull; Vibrant Festivals</div>
+                </div>
+
+                <div id="hero-img8">
+                    <img src="{% static 'core/images/heroimages/boat.jpg' %}" class="hero-img">
+                    <div class="hero-text">&bull; Vibrant Festivals</div>
+                </div>
+
+            </div>
+            
+            			<div class="hero-indicator-cont">
+				<div class="hero-indicator" id="img1"></div>
+				<div class="hero-indicator" id="img2"></div>
+				<div class="hero-indicator" id="img3"></div>
+				<div class="hero-indicator" id="img4"></div>
+				<div class="hero-indicator" id="img5"></div>
+				<div class="hero-indicator" id="img6"></div>
+				<div class="hero-indicator" id="img7"></div>
+				<div class="hero-indicator" id="img8"></div>
+			</div>
+        </section>
+
+        <section class="description">
+          {% if not user.is_authenticated %}
+            <div class="description-header">
+                Explore <span class="highlighted">India's <br>Legacy</span> At Your Desk
+            </div>
+{% else %}
+  <div class="description-header">
+                <span style="font-weight:200;">Welcome Once Again </span><br><span style="color:var(--btn-bg);font-family:poppins;">{{ user.first_name }}</span>
+            </div>
+          {% endif %}
+            <div class="description-text">
+                Here you will find the diverse culture, vibrant festivals and ancient monuments.
+            </div>
+
+            <!-- FIXED LINK -->
+            <button class="get-started">
+                <a href="{% url 'searcher' %}">{% if not user.is_authenticated %}Get Started {% else %}Start Exploration {% endif %}</a>
+            </button>
+        </section>
+
+    </section>
+
+    <section class="infotabs">
+        <div class="tabs">
+            <img src="{% static 'core/images/infotabs/festival-icon.png' %}" class="tab-icon">
+            <div class="tab-text">Vibrant Festivals</div>
+            				<div class="tab-desc">Numerous exciting festivals</div>
+	
+        </div>
+
+        <div class="tabs">
+            <img src="{% static 'core/images/infotabs/cuisine-icon.png' %}" class="tab-icon">
+            <div class="tab-text">Delicious Cuisines</div>
+            <div class="tab-desc">Have a taste of the real taste!</div>
+        </div>
+				
+
+        <div class="tabs">
+            <img src="{% static 'core/images/infotabs/monument-icon.png' %}" class="tab-icon">
+            <div class="tab-text">Ancient Monuments</div>
+            	<div class="tab-desc">Explore adventurous historical monuments</div>
+        </div>
+			
+
+        <div class="tabs">
+            <img src="{% static 'core/images/infotabs/rangoli-icon.png' %}" class="tab-icon">
+            <div class="tab-text">Diverse Culture</div>	<div class="tab-desc">Have a look to the fascinating cultur</div>
+        </div>
+        			
+
+    </section>
+
+
+
+		<section class="categories">
+<div class="categ-desc">			<h2>Explore Categories</h2>
+			<p>Providing you an experience of world famous Indian cuisines, festivals, monuments, culture and many more. </p></div>
+			<div class="category-box" id="categ-cuisine">
+				<h3>Cuisines</h3>
+				<div>
+				<div class="categ-box-opt">Idli</div>
+				<div class="categ-box-opt">Dal Bhati</div>
+				<div class="categ-box-opt">Rasam</div>
+			</div>
+			<div class="exp-btn">Explore <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z"/></svg>
+			</div></div>
+			</div>
+			<div class="category-box right" id="categ-festival">
+				<h3>Festivals</h3>
+				<div>
+				<div class="categ-box-opt">Christmas</div>
+				<div class="categ-box-opt">Diwali</div>
+				<div class="categ-box-opt">Eid</div>
+				</div>
+				<div class="exp-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M400-240 160-480l240-240 56 58-142 142h486v80H314l142 142-56 58Z"/></svg> Explore</div>
+			</div>
+			<div class="category-box" id="categ-monument">
+				<h3>Monuments</h3>
+				<div>
+				<div class="categ-box-opt">Lotus Temple</div>
+				<div class="categ-box-opt">Taj Mahal</div>
+				<div class="categ-box-opt">Red Fort</div>
+				</div>
+							<div class="exp-btn">Explore <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z"/></svg>
+			</div>
+			</div>
+			<div class="category-box right" id="categ-culture">
+				<h3>Culture</h3>
+				<div>
+				<div class="categ-box-opt">Rangoli</div>
+				<div class="categ-box-opt">Ukiyo</div>
+				<div class="categ-box-opt">Mandala</div>
+			</div>
+							<div class="exp-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M400-240 160-480l240-240 56 58-142 142h486v80H314l142 142-56 58Z"/></svg> Explore</div>
+
+			</div>
+		</section>
+		<section class="about">
+			<h3>How We Are Different?</h3>
+			<p>At BharatQuest, we go beyond just showcasing India's heritage—we immerse you in it. Unlike traditional travel or culture platforms, we curate authentic, lesser-known stories, traditions, and experiences that celebrate India's diversity with depth and context. Our interactive approach blends rich visuals, local insights, and user-friendly exploration, making cultural discovery engaging and accessible to everyone, everywhere. Whether it’s a hidden festival, a regional recipe, or a monument’s untold history, we bridge the gap between curiosity and connection.  </p>
+		</section>
+
+
+
+</main>
+{% endblock %}
+
+{% block mainjs %}
+<script type="module" src="{% static 'src/home.js' %}?v=1.2"></script>
+{% endblock %}

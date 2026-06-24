@@ -1,0 +1,270 @@
+{% extends "base.html" %} 
+{% load templatetags %}
+{% load static %} 
+
+{% block title %}{{ blog.blog_title }} | BharatQuest{% endblock %} 
+
+{% block maincss %}
+<link rel="stylesheet" href="{% static 'styles/blog.css' %}?v=1.1.2" />
+<style>
+    /* Page Layout */
+    .blog-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem;
+        background-color: var(--body-bg);
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* 1. Styled Title & Header */
+    .blog-header {
+        margin-bottom: 2rem;
+    }
+
+    .blog-title {
+        color: var(--home-header-text);
+        font-size: 2.8rem;
+        font-weight: var(--font-bold);
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+    }
+
+    /* 2 & 3. Short Author Details & Meta Data */
+    .blog-meta-top {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--secondary-text-color);
+        font-size: 0.95rem;
+    }
+
+    .meta-author {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .meta-avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--plate-bg);
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    /* 5. Cover Image */
+    .blog-cover-image {
+        width: 100%;
+        max-height: 450px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 3rem;
+        box-shadow: var(--shadow);
+    }
+
+    /* 4. CKEditor Content Styling */
+    .ck-content {
+        color: var(--primary-text-color);
+        font-size: 1.15rem;
+        line-height: 1.8;
+    }
+
+    .ck-content h2, .ck-content h3, .ck-content h4 {
+        color: var(--home-header-text);
+        font-weight: var(--font-bold);
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .ck-content p {
+        margin-bottom: 1.5rem;
+    }
+
+    .ck-content a {
+        color: var(--highlighted-text);
+        text-decoration: underline;
+        text-decoration-color: var(--secondary-bg);
+        transition: all 0.2s;
+    }
+
+    .ck-content a:hover {
+        color: var(--btn-bg);
+        text-decoration-color: var(--btn-bg);
+    }
+
+    .ck-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 2rem 0;
+        box-shadow: var(--shadow);
+    }
+
+    .ck-content blockquote {
+        border-left: 4px solid var(--btn-bg);
+        background-color: var(--plate-bg);
+        padding: 1.2rem 1.5rem;
+        margin: 2rem 0;
+        font-style: italic;
+        border-radius: 0 8px 8px 0;
+        color: var(--secondary-text-color);
+    }
+
+    .ck-content pre, .ck-content code {
+        background-color: var(--bg-secondary);
+        color: var(--accent-color);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 0.95em;
+    }
+
+    .ck-content pre {
+        padding: 1.5rem;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+    }
+
+    /* 3. Detailed Author Card (Bottom) */
+    .author-card-detailed {
+        margin-top: 4rem;
+        padding: 2.5rem;
+        background: var(--home-card-bg);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
+        border: 1px solid var(--border-color);
+    }
+
+    .author-card-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: var(--backdrop-shadow);
+    }
+
+    .author-info h3 {
+        color: var(--home-header-text);
+        margin: 0 0 0.5rem 0;
+        font-size: 1.4rem;
+    }
+
+    .author-info .author-role {
+        color: var(--highlighted-text);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .author-info p {
+        color: var(--secondary-text-color);
+        line-height: 1.6;
+        margin-bottom: 0;
+        font-size: 0.95rem;
+    }
+    
+    @media (max-width: 600px) {
+        .blog-title { font-size: 2.2rem; }
+        .author-card-detailed { flex-direction: column; align-items: center; text-align: center; }
+    }
+</style>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+{% endblock %} 
+
+{% block main %}
+<main class="blog-container">
+    
+    <section class="header" class="blog-header">
+        <h1 class="blog-title">{{ blog.blog_title|safe }}</h1>
+        
+        <div class="blog-meta-top">
+            <div class="meta-author">
+                {% if blog.author.profile.avatar %}
+                    <img src="{{ blog.author.profile.avatar.url }}" alt="{{ blog.author.username }}" class="meta-avatar">
+                {% else %}
+                    <div class="meta-avatar" style="background:var(--plate-bg); display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--btn-bg);">
+                        {{ blog.author.username|make_list|first|upper }}
+                    </div>
+                {% endif %}
+                <strong>{{ blog.author.fullname|default:blog.author.username }}</strong>
+            </div>
+            
+            <div class="meta-item" title="Published Date">
+              <i data-lucide="calendar-days"></i>  
+              <span>{{ blog.created_at|date:"F j, Y" }}</span>
+            </div>
+
+            <div class="meta-item" title="Total Views">
+                <i data-lucide="eye"></i>
+                 <span>{{ blog.views }} Views</span>
+            </div>
+        </div>
+      </section>
+
+    {% if blog.cover_image %}
+        <img src="{{ blog.cover_image.url }}" alt="{{ blog.blog_title }}" class="blog-cover-image">
+    {% endif %}
+
+    <article class="blog-content ck-content">
+        {{ blog.blog_content|replace_with_asterisk:"sex"|safe }}
+    </article>
+
+    <section class="author-card-detailed">
+        {% if blog.author.profile.avatar %}
+            <img src="{{ blog.author.profile.avatar.url }}" alt="{{ blog.author.username }}" class="author-card-avatar">
+        {% else %}
+             <div class="author-card-avatar" style="background:var(--plate-bg); display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:bold; color:var(--btn-bg);">
+                {{ blog.author.username|make_list|first|upper }}
+            </div>
+        {% endif %}
+        
+        <div class="author-info">
+            <h3>{{ blog.author.get_full_name|default:blog.author.username }}</h3>
+            <span class="author-role">{{ blog.author.get_role }}</span>
+            
+            <p>
+                {% if blog.author.profile.bio %}
+                    {{ blog.author.profile.bio }}
+                {% else %}
+                    A passionate writer contributing to BharatQuest.
+                {% endif %}
+            </p>
+        </div>
+    </section>
+
+</main>
+{% endblock %}
+
+
+{% block mainjs %}
+<script>
+  lucide.createIcons()
+</script>
+<script>
+    MathJax = {
+        tex: {
+            // This tells MathJax to look for single $ signs for inline math
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+</script>
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+
+{% endblock mainjs %}

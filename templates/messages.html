@@ -1,0 +1,19 @@
+ {% if messages %} {% for message in messages %}
+    <div class="alert-container {{ message.tags }}">
+      <div class="alert-box {{ message.tags }}">
+        <span class="alert-icon">
+          {% if "success" in message.tags %}✓{% else %}✕{% endif %}
+        </span>
+        <span class="alert-text">{{ message }}</span>
+      </div>
+    </div>
+    {% endfor %} {% endif %} {% if request.GET.next %}
+    <div class="alert-container">
+      <div class="alert-box error">
+        <span class="alert-icon"> ✕ </span>
+        <span class="alert-text"
+          >You must be logged in to acces this feature</span
+        >
+      </div>
+    </div>
+    {% endif %} 

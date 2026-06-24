@@ -1,0 +1,258 @@
+main ,*{
+
+	box-sizing: border-box;
+}
+
+form {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap:0.5em;
+	width: 100%;
+}
+.form-section{
+	height: 100%;
+	width: 100%;
+	padding: 1em;
+	box-sizing:border-box;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+.form-heading {
+	text-indent: 1em;
+	margin: 1em auto;
+	
+}
+
+input{
+	outline: none;
+	border:none;
+}
+.form-input:not(#captcha) {
+	height: 100%;
+	width: 85%;
+	border-radius: 0;
+	background-color: transparent;
+	padding: 0 0.2em;
+	outline:none;
+	cursor: text;
+	border: none;
+	color: var(--primary-text-color);
+}
+
+.form-input-container:not(#captchaCont) {
+	height: 2.5em;
+	width: 93%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+	border-bottom: 1px solid var(--input-border);
+	/*box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
+*/
+}
+
+.form-icon {
+	height: 70%;
+	width: 15%;
+	background-color: transparent;
+	fill: var(--btn-bg);
+}
+
+.separater {
+	font-size: 1.5em;
+	color: var(--input-border);
+	height: 100%;
+	background-color: transparent;
+	display: flex;
+	align-items: center;
+}
+
+.form-input-label {
+	position: absolute;
+	font-size: 0.7em;
+	left: 18%;
+	top: 35%;
+	color: #000;
+	background-color: transparent;
+	transition: all 0.1s ease-in;
+	color: var(--primary-text-color);
+}
+
+.form-input:focus~.form-input-label,
+.form-input:not(:placeholder-shown)~.form-input-label {
+	top: -20%;
+	background: transparent;
+	padding: 0 5px;
+	display: flex;
+	justify-content: center;
+	color: var(--secondary-text-color);
+	left: 12%;
+	border: 1px solid var(--input-border);
+	border-bottom: none;
+
+}
+
+.passVisibility {
+	height: 100%;
+	position: absolute;
+	width: 15%;
+	right: 0;
+}
+
+.pass-visibility-checkbox {
+	display: none;
+}
+
+.pass-visibility-label {
+	height: 80%;
+	width: 80%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.pass-visibility-label svg {
+	position: absolute;
+	height: 80%;
+	width: 80%;
+	top: -25%;
+	right: 25%;
+	fill: var(--btn-bg);
+
+
+}
+
+.pass-visibility-checkbox:checked~label .passHide {
+	display: none;
+}
+
+#signin {
+	height: 2em;
+	width: min(80%,400px);
+	font-size: 1.4em;
+	font-weight: 700;
+	background: var(--btn-bg);
+	color: #fff;
+	border: none;
+	padding: 0 3px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius:0.33em;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 1px 10px -1px, rgba(0, 0, 0, 0.3) 0px 1px 5px -1px !important;
+}
+
+.login-help {
+	
+
+box-sizing: border-box;
+  background-color: var(--bg-secondary);
+  border-radius: 0.625em; /* 10px equivalent */
+  padding: 1.25em;
+  margin: 1.25em 0; /* 20px top/bottom */
+  border: 0.0625em solid var(--border-color); /* 1px border */
+  width: 100%;
+  
+}
+
+.troubleshoot-container {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.section-title {
+  color: var(--primary-text-color);
+  font-size: 1.75em; /* 28px based on 16px root */
+  margin-bottom: 0.5em;
+  position: relative;
+  padding-bottom: 0.25em;
+  font-weight: var(--font-bold);
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 15%;
+  height: 0.125em; /* 2px */
+  background: var(--accent-color);
+}
+
+.section-subtitle {
+  color: var(--secondary-text-color);
+  font-size: 1em;
+  margin-bottom: 1.5em;
+}
+
+.troubleshoot-list {
+  display: grid;
+  gap: 1.5em;
+}
+
+.troubleshoot-item {
+  background: var(--bg-primary);
+  padding: 1.5em;
+  border-radius: 0.5em;
+  box-shadow: 0 0.125em 0.5em rgba(0,0,0,0.05);
+}
+
+.issue-title {
+  color: var(--primary-text-color);
+  font-size: 1.125em; /* 18px */
+  margin-bottom: 0.75em;
+}
+
+.solution-list {
+  padding-left: 1.25em;
+  color: var(--secondary-text-color);
+  line-height: 1.6;
+}
+
+.solution-list li {
+  margin-bottom: 0.5em;
+}
+.solution-list strong{
+  font-size: 0.8em;
+}
+.inline-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.inline-link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+.pro-tip {
+  background-color: var(--accent-light);
+  padding: 1em;
+  border-radius: 0.5em;
+  margin-top: 1.5em;
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+.tip-icon {
+  font-size: 1.25em;
+}
+
+.tip-text {
+  color: var(--secondary-text-color);
+  margin: 0;
+  font-size: 0.9375em; /* 15px */
+}
+
+@media (min-width:786px) {
+	form{
+		width: 75%;
+
+	}
+	
+}

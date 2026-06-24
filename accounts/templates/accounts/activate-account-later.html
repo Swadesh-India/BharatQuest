@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Log In -
+BharatQuest{% endblock %} {% block maincss %}
+<link rel="stylesheet" href="{% static 'styles/login.css' %}?v=1.1.8" />
+<style>
+  .form-section {
+    margin-top: 2em;
+  }
+</style>
+{% endblock %} {% block main %}
+<main>
+  <section class="form-section">
+    <h2 class="form-heading">Activate Account</h2>
+
+    <form
+      method="POST"
+      action="{% url 'account-activation-later' %}"
+      id="login-form"
+      autocomplete="off"
+    >
+      <br />
+      {% csrf_token %}
+
+      <div class="form-input-container" id="email">
+        <svg
+          class="form-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#0060ff"
+        >
+          <path
+            d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"
+          />
+        </svg>
+
+        <span class="separater">|</span>
+        {{ form.email }}
+        <label class="form-input-label" for="name">Email</label>
+        <br /><br />
+      </div>
+      <br />
+
+      <button type="submit" id="signin">Send Activation email</button>
+    </form>
+  </section>
+</main>
+{% endblock %}

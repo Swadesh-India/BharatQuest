@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact - BharatQuest{% endblock %}
+
+{% block maincss %}
+<link rel="stylesheet" href="{% static 'styles/contact.css' %}?v=1.1.2">
+{% endblock %}
+
+{% block main %}
+
+	<main>
+		 
+
+		<section class="form-section">
+			<h3 class="form-heading">Contact Us</h3>
+			<form action="/contact/" class="contact-form" method='POST'>
+			{% csrf_token %}
+			<div class="form-input-container" id="username"><svg xmlns="http://www.w3.org/2000/svg" class="form-icon" height="24px" viewBox="0 -960 960 960" width="24px" fill="#0060ff">
+						<path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
+					</svg>
+					<span class="separater">|</span>
+					{{ form.name }}
+				
+					
+				</div>
+				
+				<div class="form-input-container"><svg xmlns="http://www.w3.org/2000/svg" class="form-icon" height="24px" viewBox="0 -960 960 960" width="24px" fill="#0060ff">
+	<path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z" />
+
+		</svg>
+					<span class="separater">|</span>
+					{{ form.email }}
+				
+			
+					
+				</div>
+				<div class="form-input-container"><svg xmlns="http://www.w3.org/2000/svg" class='form-icon' height="24px" viewBox="0 -960 960 960" width="24px" fill="#0060ff"><path d="M420-160v-520H200v-120h560v120H540v520H420Z"/></svg>
+					<span class="separater">|</span>
+				{{ form.subject }}
+					
+				</div>
+				<div class="form-input-container" id="msg-cont">
+				{{ form.message }}
+				
+					
+				</div>
+				
+				<button type="submit" id="signin">
+				
+				Submit
+				
+				</button>
+			</form>
+		</section>
+		<section class="instruction" aria-labelledby="instruction-heading">
+			<div class="instruction-container">
+				<h2 id="instruction-heading" class="section-title">General Instructions</h2>
+				<p class="section-subtitle">Follow these instructions to successfully contact with us.</p>
+		
+				<div class="instruction-list">
+				
+					<div class="instruction-item">
+						<h3 class="issue-title">Fill correct credentials</h3>
+						<ul class="solution-list">
+							<li>Credential integrity will be verified</li>
+							<li>Email and phone number will be used to address you.</li>
+							<li>Your name will be your identity at us.</li>
+						</ul>
+					</div>
+		
+					<!-- Issue 2 -->
+
+					<!-- Issue 3 -->
+					<div class="instruction-item">
+						<h3 class="issue-title">After submission</h3>
+						<ul class="solution-list">
+							<li>Wait 24 hours, then search for emails from <strong>troubleshoot.bharatquest@gmail.com</strong>.</li>
+							<li>Check your spam folder too.</li>
+						</ul>
+					</div>
+			<div class="instruction-item">
+				<h3 class="issue-title">If no response found</h3>
+				<ul class="solution-list">
+					<li>Wait 24 hours more , then search for emails from us.</li>
+					<li>Email us directly at <strong>contact.bharatquest@gmail.com</strong>.</li>
+				</ul>
+			</div>
+					<div class="instruction-item" id="common-issue">
+						<h3 class="issue-title">Page Freezes After Submission?</h3>
+						<ul class="solution-list">
+							<li>Disable browser extensions (especially ad blockers).</li>
+							<li>Switch from Wi-Fi to mobile data or vice versa.</li>
+						</ul>
+					</div>
+		
+
+				
+			</div>
+		</section>
+
+
+
+	</main>
+
+
+{% endblock %}
+
+{% block mainjs %}
+
+{% endblock %}

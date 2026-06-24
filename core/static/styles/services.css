@@ -1,0 +1,174 @@
+/* Structural Layout Configurations */
+.services-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 80px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    min-height: calc(100vh - 60px);
+    background-color: var(--body-bg); /* Bound container to global app theme */
+}
+
+/* Full Width Announcement Bar */
+.status-top-bar {
+    /* Kept intentionally distinct or fallback to secondary dark blocks if needed */
+    background-color: var(--bg-secondary); 
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px 24px;
+    box-shadow: var(--shadow);
+}
+
+.bar-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon-indicator {
+    width: 18px;
+    height: 18px;
+    color: var(--btn-bg); /* Adapts flawlessly via active buttons primary accents */
+    flex-shrink: 0;
+}
+
+.bar-text {
+    font-size: 13px;
+    color: var(--secondary-text-color);
+    line-height: 1.5;
+}
+
+.bar-text strong {
+    color: var(--primary-text-color);
+    font-weight: 600;
+}
+
+/* Hero Section Formatting */
+.services-hero {
+    text-align: center;
+    max-width: 760px;
+    margin: 20px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.hero-badge {
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    background-color: var(--badge-bg);
+    color: var(--highlighted-text);
+    padding: 6px 14px;
+    border-radius: 99px;
+    display: inline-block;
+}
+
+.main-title {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1.2px;
+    color: var(--brand-dark);
+    line-height: 1.15;
+}
+
+.main-title span {
+    color: var(--highlighted-text);
+}
+
+.sub-description {
+    font-size: 16px;
+    color: var(--brand-muted);
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Showcase Grid Blueprint */
+.domains-display-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 12px;
+}
+
+.domain-showcase-card {
+    background-color: var(--home-card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.domain-showcase-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+    filter: brightness(1.02); /* Clean micro-interaction feedback in dark mode */
+}
+
+.domain-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background-color: var(--badge-bg);
+    color: var(--highlighted-text);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.domain-icon-wrapper i {
+    width: 22px;
+    height: 22px;
+}
+
+.domain-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.domain-tag {
+    font-size: 10px;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--highlighted-text);
+}
+
+.domain-heading {
+    font-size: 18px;
+    font-weight: var(--font-bold);
+    letter-spacing: -0.3px;
+    color: var(--primary-text-color);
+}
+
+.domain-caption {
+    font-size: 13.5px;
+    color: var(--brand-muted);
+    line-height: 1.55;
+}
+
+/* Responsive Scaling Overrides */
+@media (max-width: 768px) {
+    .domains-display-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .main-title {
+        font-size: 32px;
+    }
+    
+    .domain-showcase-card {
+        padding: 24px;
+        gap: 16px;
+    }
+}

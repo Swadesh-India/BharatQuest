@@ -1,0 +1,21 @@
+# Python Cache
+__pycache__/
+*.pyc
+
+# Virtual Environments
+venv/
+env/
+.venv/
+
+# Local Database
+db.sqlite3
+
+# Secret Environment Variables
+.env
+.ini
+
+# Ignore everything in the media folder
+media/*
+
+# Except for the .gitkeep file
+!media/.gitkeep

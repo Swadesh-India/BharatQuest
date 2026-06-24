@@ -1,0 +1,65 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block title %}
+Services | BharatQuest
+{% endblock %} 
+
+{% block maincss %}
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="{% static 'styles/services.css' %}?v=1.1" />
+{% endblock %} 
+
+{% block main %}
+<main class="services-container">
+    <!-- Notice Bar / Header Announcement -->
+    <div class="status-top-bar">
+        <div class="bar-content">
+            <i data-lucide="info" class="icon-indicator"></i>
+            <span class="bar-text"><strong>System Announcement:</strong> The marketplace interface is in catalog preview mode. Active service placement is currently restricted.</span>
+        </div>
+    </div>
+
+    <!-- Minimal Hero Text Block -->
+    <section class="services-hero">
+        <div class="hero-badge">Ecosystem Status</div>
+        <h1 class="main-title">Explore India's <span>Legacy</span></h1>
+        <p class="sub-description">
+            Discover our upcoming modern curation framework structured to connect builders with verified heritage content strategists, traditional craft archivists, and narrative historians.
+        </p>
+    </section>
+
+    <!-- Full Width Feature Highlight Blocks -->
+    <section class="domains-display-grid">
+        <div class="domain-showcase-card">
+            <div class="domain-icon-wrapper">
+                <i data-lucide="book-open"></i>
+            </div>
+            <div class="domain-meta">
+                <span class="domain-tag">Domain Module 01</span>
+                <h3 class="domain-heading">Heritage & Research Blogging</h3>
+                <p class="domain-caption">Deep historical investigations, cross-referenced subcontinental bibliographies, and SEO-optimized regional chronicles built for modern cultural platforms.</p>
+            </div>
+        </div>
+
+        <div class="domain-showcase-card">
+            <div class="domain-icon-wrapper">
+                <i data-lucide="feather"></i>
+            </div>
+            <div class="domain-meta">
+                <span class="domain-tag">Domain Module 02</span>
+                <h3 class="domain-heading">Creative Curation & Scripting</h3>
+                <p class="domain-caption">High-fidelity audio dramaturgy, interactive storytelling maps, and traditional art motif asset transformations tailored to preserve generational data structures.</p>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %} 
+
+{% block mainjs %}
+<script>
+    // Initialize dynamic iconography matching the design specifications
+    lucide.createIcons();
+ 
+</script>
+{% endblock %}

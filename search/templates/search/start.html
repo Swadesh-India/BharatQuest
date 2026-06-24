@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Search Results{% endblock %} {% block maincss %}
+<link rel="stylesheet" href="{% static 'styles/start.css' %}" />
+{% endblock %} {% block main %}
+<main>
+  <section class="main-section">
+    <div class="title title-skeleton" id="title-cont">
+      <div class="skeleton-title">
+        <div class="skeleton-line3"></div>
+
+        <div class="skeleton-line2"></div>
+      </div>
+    </div>
+
+    <section id="quick-facts" class="info-section">
+      <div class="topic-cont skeleton" id="fact-cont">
+        <div class="skeleton-line2"></div>
+        <div class="skeleton-line3"></div>
+
+        <div class="skeleton-line1"></div>
+        <div class="skeleton-line4"></div>
+        <div class="skeleton-line1"></div>
+      </div>
+      <div class="topic-cont skeleton" id="origin-cont">
+        <div class="skeleton-line1"></div>
+
+        <div class="skeleton-line1"></div>
+        <div class="skeleton-line2"></div>
+        <div class="skeleton-line3"></div>
+        <div class="skeleton-line4"></div>
+      </div>
+
+      <div class="topic-cont skeleton" id="tradition-cont">
+        <div class="skeleton-line3"></div>
+        <div class="skeleton-line4"></div>
+        <div class="skeleton-line1"></div>
+        <div class="skeleton-line2"></div>
+        <div class="skeleton-line1"></div>
+      </div>
+      <div class="topic-cont hide-shadow" id="tips-cont"></div>
+
+      <div class="topic-cont hide-shadow" id="food-cont"></div>
+    </section>
+  </section>
+</main>
+
+{% endblock %} {% block mainjs %}
+<script src='{% static "src/start.js" %}'></script>
+<script type="module" src='{% static "src/dataretrivalsystem.js" %}'></script>
+} {% endblock %}

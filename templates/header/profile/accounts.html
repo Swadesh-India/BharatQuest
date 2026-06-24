@@ -1,0 +1,81 @@
+		
+<div class="aside-main">
+	<div class="aside-title-wrapper">
+		<div class="aside-title">
+			<div class="aside-title-icon">
+<svg xmlns="http://www.w3.org/2000/svg" height="44px" viewBox="0 -960 960 960" width="44px" fill="#001f3f"><path d="M367-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q560-607 560-640t-23.5-56.5Q513-720 480-720t-56.5 23.5Q400-673 400-640t23.5 56.5Q447-560 480-560t56.5-23.5ZM480-640Zm0 400Z"/></svg> 
+			</div>
+			<div class="aside-title-text">Accounts</div>
+		</div>
+		<div class="aside-title-line"></div>
+	</div>
+	<div class="aside-main">
+		<p class="aside-text">Manage your personal details, update password and security configurations.</p>
+		
+<div class="aside-account-info-wrapper">
+			<div class="aside-account-personal-info">
+				<div class="aside-account-title">Personal Info</div>
+				<div class="aside-account-username">
+					<span class="aside-label">username</span>
+					<span class="aside-acc-detail">{{ request.user.username }}</span>
+				</div>
+				<div class="aside-account-fullname">
+					
+					<span class="aside-label">full name</span>
+					<span class="aside-acc-detail">{{ request.user.fullname }}</span>
+				</div>
+					{% if request.user.profile.dob %}
+					<div class="aside-account-dob">
+					<span class="aside-label">DOB</span>
+					<span class="aside-acc-detail">{{ request.user.profile.dob }}</span>
+				</div>
+				{% endif %}
+					
+				<div class="aside-account-email">
+					<span class="aside-label">email</span>
+					<span class="aside-acc-detail">{{ request.user.email }}</span>
+				</div>
+				
+			
+				{% if request.user.profile.bio %}
+				<div class="aside-account-bio">
+					<span class="aside-label">Bio</span>
+					<span class="aside-acc-detail">{{ request.user.profile.bio }}</span>
+				</div>
+				{% endif %}
+			</div>
+			<div class="aside-account-activities">
+					<div class="aside-account-title">My Activities</div>
+				<div class="aside-your-blogs">
+					<span class="aside-label">My Blogs</span>
+					<span class="aside-count">{{ request.user.blogs.count }}</span>
+				
+				</div>
+				<div class="aside-last-login">
+					<span class="aside-label">Last Login</span>
+					<span class="aside-count">{{ request.user.last_login }}</span>
+				</div>
+			</div>
+			<div class="aside-danger-zone">
+				<div class="aside-danger-zone-text aside-account-title">&#9888; Danger Zone - <span style="text-transform:none;font-weight:">Be carefull with the settings below</span></div>
+				<a href="{% url 'password-reset-for-logged-in' %}"><button class="aside-password-reset">Reset Password</button></a>
+		
+				<form action="{% url 'delete-account-request' %}"
+				method="POST" 
+  onsubmit="return confirmDelete()"
+  style="display: inline-block;height:auto;width:auto;">
+  {% csrf_token %}
+				<button type="submit" class="aside-delete-account" style="width:100%;background: var(--accent-color);color:#fff;">&#10006; Delete Account </button>
+
+
+				</form>
+				<script>
+function confirmDelete() {
+    const userConfirmed = confirm("WARNING: Are you sure you want to delete your account? This will send a permanent deletion link to your email.");
+    return userConfirmed; 
+}
+</script>
+			</div>
+		</div>
+	</div>
+</div>

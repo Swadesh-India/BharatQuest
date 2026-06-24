@@ -1,0 +1,164 @@
+/* ==========================================================================
+   1. GLOBAL SYSTEM CORRECTIONS (ANTI-OVERFLOW GUARD)
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box !important;
+}
+
+/* Hard structural clamp to prevent page tracking errors */
+main {
+    width: 100%;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 1rem 3rem 1rem; /* Universal fallback cushion */
+}
+
+/* ==========================================================================
+   2. REFINED HEADER STYLING
+   ========================================================================== */
+.form-header-container {
+    width: 100%;
+    max-width: 750px; 
+    text-align: left;
+    margin: 24px auto 32px auto; /* Centered wrapper keeps text content from overflowing */
+    padding: 0 4px; /* Internal alignment bumper */
+}
+
+.form-main-heading {
+    font-size: clamp(1.6rem, 5vw, 2.25rem); 
+    font-weight: 800;
+    color: var(--primary-text-color);
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.form-main-heading::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 4px;
+    background: var(--btn-bg);
+    border-radius: 2px;
+}
+
+.form-sub-heading {
+    font-size: 0.95rem;
+    color: var(--secondary-text-color);
+    font-weight: 400;
+    margin-top: 0.75rem;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   3. CLEAN COMPACT FORM CONTAINER
+   ========================================================================== */
+#add-blog-form {
+    width: 100%;
+    max-width: 750px; 
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--home-card-bg);
+  
+    border-radius: 14px;
+   
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Django Form Paragraph fields clean stacking rules */
+#add-blog-form p {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#add-blog-form label {
+    font-size: 0.8rem;
+    font-weight: var(--font-bold, 700);
+    color: var(--primary-text-color);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.85;
+}
+
+/* ==========================================================================
+   4. FLUID COMPONENT WIDGETS
+   ========================================================================== */
+.premium-input {
+    width: 100%; 
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    color: var(--primary-text-color);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.premium-input:focus {
+    outline: none;
+    background-color: var(--body-bg);
+    border-color: var(--highlighted-text);
+    box-shadow: 0 0 0 3px var(--secondary-bg);
+}
+
+.premium-textarea {
+    resize: vertical;
+    min-height: 90px;
+    font-family: inherit;
+}
+
+/* Dynamic handling for file input layouts */
+.premium-file-input {
+    width: 100%;
+    padding: 10px;
+    background: var(--bg-secondary);
+    border: 2px dashed var(--input-border);
+    border-radius: 8px;
+    color: var(--secondary-text-color);
+    cursor: pointer;
+}
+
+.premium-file-input:hover {
+    border-color: var(--highlighted-text);
+}
+
+/* ==========================================================================
+   5. IS_PUBLISHED CHECKBOX FIELD PANEL
+   ========================================================================== */
+#add-blog-form p:has(#blog-publish-toggle) {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-secondary);
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-top: 0.5rem;
+}
+
+.premium-toggle {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--highlighted-text);
+}
+
+
+@media (max-width: 600px) {
+    #add-blog-form {
+        padding: 1.25rem; 
+    }
+}

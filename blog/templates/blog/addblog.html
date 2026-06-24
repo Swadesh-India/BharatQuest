@@ -1,0 +1,32 @@
+{% extends "base.html" %} 
+{% load templatetags %} 
+{% load static %} 
+{% block title %}Blogs {% endblock %}
+ {% block maincss %}
+<link rel="stylesheet" href="{% static 'styles/addblog.css' %}?v=1.1.1" />
+<style></style>
+{% endblock %}
+ {% block main %}
+<main>
+  <div class="hidden" id="hidden"></div>
+  <div class="form-header-container">
+    <h1 class="form-main-heading">Craft Your Next Story</h1>
+    <p class="form-sub-heading">
+      Share your insights, ideas, and perspectives with the world.
+    </p>
+  </div>
+  <form
+    method="POST"
+    action=""
+    id="add-blog-form"
+    autocomplete="off"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %} 
+    {{ form.media }} 
+    {{ form.as_p }}
+    <input type="submit" id="submit-btn" value="submit" />
+  </form>
+</main>
+
+{% endblock %}
