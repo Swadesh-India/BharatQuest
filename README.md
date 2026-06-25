@@ -35,7 +35,7 @@ To get a local copy of BharatQuest up and running on your machine, follow these 
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/Swadesh-India/BharatQuest](https://github.com/Swadesh-India/BharatQuest)
+git clone https://github.com/Swadesh-India/BharatQuest
 cd BharatQuest
 ```
 ### 2. Set Up a Virtual Environment
@@ -48,14 +48,18 @@ venv\Scripts\activate
 # Mac/Linux
 python3 -m venv venv
 source venv/bin/activate
+```
 
 ### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
 ### 4. Configure Environment Variables
 Create a .env file in the root directory (alongside manage.py) and add your local keys:
 
-
+```bash
 SECRET_KEY=your_local_django_secret_key
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
@@ -65,14 +69,15 @@ EMAIL_HOST_PASSWORD=your_google_app_password
 # Security Keys
 RECAPTCHA_PUBLIC_KEY=your_recaptcha_site_key
 RECAPTCHA_PRIVATE_KEY=your_recaptcha_secret_key
-
+```
 
 ### 5. Initialize the Database & Run
 
+```bash
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
-
+```
 ### 📁 Project Structure
 
 BharatQuest/
@@ -92,6 +97,6 @@ BharatQuest/
 
 ### 6. Cleanup command
 In your console run the following commands to delete inactive accounts older than 2 days
-    
+```bash
 python manage.py shell < cleanup.py
-
+```
