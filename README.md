@@ -97,6 +97,7 @@ BharatQuest/
 
 ### 6. Cleanup command
 In your console run the following commands to delete inactive accounts older than 2 days
+
 ```bash
 python manage.py shell < cleanup.py
 ```
