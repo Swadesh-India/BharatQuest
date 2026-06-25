@@ -65,3 +65,26 @@ EMAIL_HOST_PASSWORD=your_google_app_password
 # Security Keys
 RECAPTCHA_PUBLIC_KEY=your_recaptcha_site_key
 RECAPTCHA_PRIVATE_KEY=your_recaptcha_secret_key
+
+
+### 5. Initialize the Database & Run
+
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+
+### 📁 Project Structure
+
+BharatQuest/
+│
+├── accounts/          # Custom user authentication, profiles, and bot-defense logic
+├── blog/              # Content generation, categories, and articles
+├── core/              # Global views, landing pages, and shared utilities
+├── search/            # Site-wide search processing and filtering
+├── web/               # Core project configuration (settings.py, urls.py)
+│
+├── static/            # Global CSS, JS, and image assets
+├── templates/         # Shared HTML layout files
+├── .gitignore         # Explicitly ignores venv, .env, and db.sqlite3
+├── manage.py          # Django management script
+└── requirements.txt   # Project dependencies
