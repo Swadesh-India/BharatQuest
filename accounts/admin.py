@@ -8,7 +8,7 @@ class ModelAdmin(UserAdmin):
     model=User
     list_display =("email","username","fullname","is_staff","is_active","is_superuser")
     list_filter = ("is_superuser",)
-    filter_horizontal = []
+    filter_horizontal = ("groups","user_permissions")
 
     search_fields = ["email", "username", "fullname"]
     ordering = ["email"]
@@ -17,7 +17,7 @@ class ModelAdmin(UserAdmin):
     fieldsets = (
         ("credentials", {"fields": ("email", "password")}),
         ("Personal Info", {"fields": ("fullname", "username")}),
-        ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser", "is_author")}),
+        ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser", "is_author",'groups','user_permissions')}),
         ("Important dates", {"fields": ("last_login", "created_at", "updated_at")}),
     )
 
