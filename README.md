@@ -87,3 +87,10 @@ BharatQuest/
 ├── .gitignore         # Explicitly ignores venv, .env, and db.sqlite3
 ├── manage.py          # Django management script
 └── requirements.txt   # Project dependencies
+
+
+### 6. Cleanup command
+In your console run the following commands to delete inactive accounts older than 2 days
+    
+python manage.py shell < cleanup.py
+
