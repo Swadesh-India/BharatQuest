@@ -90,3 +90,9 @@ input::file-selector-button {
   align-items: center;
   justify-content: center;
 }
+
+img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
