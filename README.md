@@ -40,6 +40,7 @@ cd BharatQuest
 
 ### 2. Set Up a Virtual Environment
 
+```bash
 # Windows
 python -m venv venv
 venv\Scripts\activate
