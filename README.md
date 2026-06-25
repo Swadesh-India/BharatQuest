@@ -37,7 +37,7 @@ To get a local copy of BharatQuest up and running on your machine, follow these 
 ```bash
 git clone [https://github.com/Swadesh-India/BharatQuest](https://github.com/Swadesh-India/BharatQuest)
 cd BharatQuest
-
+```
 ### 2. Set Up a Virtual Environment
 
 ```bash
