@@ -114,9 +114,9 @@
       thinkings to the curious readers
     </p>
   </header>
-
+{% if request.user.blogs %}
   <div class="showcase-container">
-    {% if request.user.blogs %}
+    
     <section class="featured-section">
       {% for blog in blogs %}
       <article
@@ -207,8 +207,9 @@
       </article>
       {% endfor %}
     </section>
-    {% endif %}
+  
   </div>
+  {% endif %}
 </main>
 
 {% endblock %} {% block mainjs %}

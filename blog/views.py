@@ -4,6 +4,7 @@ from django.contrib import messages
 from . import models
 from .forms import CreateBlog
 from .decorators import author_perms_reqired
+from django_ratelimit.decorators import ratelimit
 def blogs(request):
     featured_blogs=models.Blog.objects.filter(is_featured=True,is_published=True)
     other_blogs=models.Blog.objects.filter(is_featured=False,is_published=True)
@@ -29,9 +30,13 @@ def blog_detail(request,blog_id,slug):
     return render(request, "blog/blogcontent.html",{"blog":blog_content})
 @login_required(login_url="/accounts/login")
 @author_perms_reqired
+@ratelimit(key="user",rate="5/m", method='POST', block=False)
 def add_blog(request):
     
     if request.method =="POST":
+        if getattr(request,"limited",False):
+            messages.error(request, "You have requested too many Blog writes. Please try again in a minute.")
+            return redirect("login")
         form = CreateBlog(request.POST,request.FILES)
         if form.is_valid(): 
             blog=form.save(commit=False)
@@ -65,12 +70,17 @@ def myblogs(request):
 
 @login_required
 @author_perms_reqired
+@ratelimit(key="user", rate="5/m", method="POST", block=False)
 def edit_blog(request):
+    if getattr(request,"limited",False):
+            messages.error(request, "You have requested too many attempts. Please try again in a minute.")
+            return redirect("login")
     blog_id = request.GET.get('blogId')
     slug = request.GET.get('slug')
 
     blog_instance = get_object_or_404(models.Blog, pk=blog_id, slug=slug)
     if request.method =="POST":
+        
         form = CreateBlog(request.POST,request.FILES,instance=blog_instance)
         if form.is_valid(): 
             form.save()

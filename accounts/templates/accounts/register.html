@@ -88,7 +88,7 @@ Registration{% endblock %} {% block maincss %}
     >
       <br />
       {% csrf_token %}
-
+      {{ form.phone_number }}
       <div
         class="form-error-box"
         id="frontend-error-container"
@@ -106,15 +106,18 @@ Registration{% endblock %} {% block maincss %}
         </button>
 
         <h4 id="error-box-heading">
-          {% if form.errors %}Please correct the following server errors:{% else
-          %}Please correct the following:{% endif %}
+          Please correct the following errors:
         </h4>
 
         <ul id="frontend-error-list">
-          {% if form.errors %} {% for field, errors in form.errors.items %} {%
-          for error in errors %}
+          {% if form.errors %}
+           {% for field, errors in form.errors.items %}
+           {% for error in errors %}
           <li><strong>{{ field|title }}:</strong> {{ error }}</li>
-          {% endfor %}{% endif %}
+
+          {% endfor %}
+          {% endfor %}
+          {% endif %}
         </ul>
       </div>
 
@@ -289,7 +292,8 @@ Registration{% endblock %} {% block maincss %}
       <br />
 
       <br />
-
+{{ form.captcha }}
+<br><br>
       <button type="submit" id="signin">Sign In</button>
     </form>
   </section>

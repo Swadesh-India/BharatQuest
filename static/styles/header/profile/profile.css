@@ -417,6 +417,8 @@ svg {
     width: 100vw;
     height: 100vh;
     padding: 48px;
+    padding:64px;
+padding-top:84px !important;
   }
   .profile-aside {
     width: 100vw;

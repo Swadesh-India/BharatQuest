@@ -72,3 +72,21 @@ input::file-selector-button {
   border: 1px solid var(--secondary-text-color);
   border-radius: 4px;
 }
+
+
+.phone_number{
+  opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+#id_captcha{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

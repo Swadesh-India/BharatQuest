@@ -1,10 +1,10 @@
 from .ckeditorconfig import *
 from decouple import config, Csv
 import os
-if os.name=="posix":
-    from django.core.files import locks
-    locks.lock = lambda a,b:True
-    locks.unlock = lambda a :True
+# if os.name=="posix":
+#     from django.core.files import locks
+#     locks.lock = lambda a,b:True
+#     locks.unlock = lambda a :True
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,8 +28,11 @@ INSTALLED_APPS = [
     'blog',
     'django_cleanup.apps.CleanupConfig',
     'accounts.apps.AccountsConfig',
+    'django_recaptcha'
 ]
 
+RECAPTCHA_PUBLIC_KEY = config("GOOGLE_RECAPTCHA_SITE_KEY")
+RECAPTCHA_PRIVATE_KEY = config("GOOGLE_RECAPTCHA_SECRET_KEY")
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -38,6 +41,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'accounts.middlewares.IPBlockerMiddleware',
 ]
 
 ROOT_URLCONF = 'web.urls'
@@ -58,6 +62,12 @@ TEMPLATES = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 WSGI_APPLICATION = 'web.wsgi.application'
 
 

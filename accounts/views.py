@@ -14,7 +14,7 @@ from .utils import send_user_verification_email
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
 
-from django.http import HttpResponse
+from django.http import HttpResponseForbidden
 from .forms import Register_form,Login_form,Password_forget_form,Password_forget_reset_form,Password_reset_for_logged_in_form,Account_activation_form,ProfileForm
 from .models import User,Profile
 
@@ -22,11 +22,20 @@ from .decorators import valid_reset_session_required, limit_submission_rate
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-@limit_submission_rate(seconds=1)
+from django_ratelimit.decorators import ratelimit
+
+@ratelimit(key="ip", rate="10/m", method='POST', block=True)
+@ratelimit(key="post:email",rate="5/m", method='POST', block=False)
+@limit_submission_rate(seconds=10)
 def login_view(request):
+    
     if request.user.is_authenticated:
         return redirect("home")
     if request.method=='POST':
+        if getattr(request,"limited",False):
+            messages.error(request, "You have requested too many login attempts. Please try again in a minute.")
+            return redirect("login")
+        
         form = Login_form(request.POST)
         if form.is_valid():
             email = form.cleaned_data.get("email")
@@ -61,13 +70,16 @@ def login_view(request):
     
     return render(request, 'accounts/login.html',{"form":form})
 
-@limit_submission_rate(seconds=1)
+@ratelimit(key="ip",rate="5/m", method='POST', block=False)
+@limit_submission_rate(seconds=10)
 def registration_view(request):
     if request.method=='POST':
-        
-        form = Register_form(request.POST)
+        if getattr(request,"limited",False):
+            messages.error(request, "You have requested too many pregistration attempts. Please try again in a minute.")
+            return redirect("register")
+        form = Register_form(request.POST, request=request)
         if form.is_valid():
-         
+            
 
             email = form.cleaned_data.get("email")
             password = form.cleaned_data.get("password")
@@ -104,6 +116,8 @@ def registration_view(request):
 
             return redirect("login")
         else:
+            if request.POST.get("phone_number"):
+                return HttpResponseForbidden("Your IP is flagged as spam")
             messages.error(request,"Failed to create account")
     else :
         form = Register_form()
@@ -111,8 +125,8 @@ def registration_view(request):
      
     return render(request, 'accounts/register.html',{"form":form})
 
-
-@limit_submission_rate(seconds=1)
+@ratelimit(key="ip", rate="5/m", method=ratelimit.ALL,block=True)
+@limit_submission_rate(seconds=10)
 def activation_view(request, uidb, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb))
@@ -136,9 +150,14 @@ def logout_view(request):
     messages.success(request, "You have been successfully logged out.")
     return redirect('login')
 
-@limit_submission_rate(seconds=1)
+@limit_submission_rate(seconds=10)
+@ratelimit(key="ip",rate="5/m", method='POST', block=False)
+@ratelimit(key="post:email", rate="3/m", method='POST', block=False)
 def password_forget_view(request):
     if request.method=="POST":
+        if getattr(request,"limited",False):
+            messages.error(request, "You have requested too many password resets. Please try again in a minute.")
+            return redirect("password-forget")
         form = Password_forget_form(request.POST)
        
         if  form.is_valid():
@@ -168,7 +187,7 @@ def password_forget_view(request):
     return render(request,"accounts/password_forget.html",{"form":form})
 
 @valid_reset_session_required
-@limit_submission_rate(seconds=1)
+@limit_submission_rate(seconds=10)
 def password_reset_view(request):
 
     if request.method == "POST":
@@ -202,6 +221,7 @@ def password_reset_view(request):
         form = Password_forget_reset_form()
     return render(request,"accounts/forget/password_forget_reset.html",{"form":form})
 
+@ratelimit(key="ip", rate="5/m", method=ratelimit.ALL,block=True)
 def reset_password_view(request,uidb,token):
     user = None
     try:
@@ -224,11 +244,14 @@ def reset_password_view(request,uidb,token):
 
 
 @login_required
-@limit_submission_rate(seconds=1)
+@limit_submission_rate(seconds=10)
+@ratelimit(key="user",rate="5/m", method="POST", block=False)
 def password_reset_for_logged_in(request):
     
     if request.method=="POST":
-      
+            if getattr(request,"limited",False):
+                messages.error(request, "You have requested too many password reset. Please try again in a minute.")
+                return redirect("password-reset-for-logged-in")
             form = Password_reset_for_logged_in_form(request.POST)
             
             if form.is_valid():
@@ -253,7 +276,8 @@ def password_reset_for_logged_in(request):
 
 @login_required
 @require_POST
-@limit_submission_rate(seconds=1)
+@limit_submission_rate(seconds=10)
+@ratelimit(key="user", rate="5/m", method="POST", block=True)
 def delete_account_request(request):
     email = request.user.email
 
@@ -272,7 +296,7 @@ def delete_account_request(request):
     return redirect("home")
 
 
-
+@ratelimit(key="ip", rate="5/m", method=ratelimit.ALL,block=True)
 def delete_account_confirm(request,uidb,token):
     user = None
     try:
@@ -290,7 +314,8 @@ def delete_account_confirm(request,uidb,token):
     else:
         return render(request, 'accounts/delete_account_invalid.html')
     
-@limit_submission_rate(seconds=1)
+@limit_submission_rate(seconds=10)
+@ratelimit(key="ip", rate="5/m", method=ratelimit.ALL,block=True)
 def account_activation_later(request):
     if request.method=="POST":
         form = Account_activation_form(request.POST)
@@ -328,6 +353,7 @@ def account_activation_later(request):
 
 
 @login_required
+@limit_submission_rate(seconds=10)
 def profile_view(request):
     user_profile= Profile.objects.filter(user=request.user).first()
 

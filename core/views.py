@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.templatetags.static import static
 from .forms import ContactForm
 from .models import Contact
-
+from django_ratelimit.decorators import ratelimit
 
 def home(request):
     return render(request, 'core/home.html')
@@ -105,11 +105,10 @@ def about(request):
 ]
 
     return render(request, 'core/about.html',{'members':members})
-    
+@ratelimit(key="ip",rate="5/s", method='POST', block=True)
 def contact(request):
     if request.method=='POST':
         form = ContactForm(request.POST)
-        
         if form.is_valid():
             form.save()
     else:

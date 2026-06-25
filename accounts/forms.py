@@ -2,7 +2,10 @@ from .models import User,Profile
 from django import forms
 from django.contrib.auth import authenticate
 from datetime import date
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
+from django.core.cache import cache
 # 1. Administrative & Staff Roles
 ADMIN_USERNAMES = [
     'admin', 'administrator', 'root', 'superuser', 'sysadmin', 
@@ -44,6 +47,10 @@ FORBIDDEN_USERNAMES = set(
     BRAND_USERNAMES
 )
 class Register_form(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request_obj = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+
     confirm_password = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={
@@ -53,7 +60,16 @@ class Register_form(forms.ModelForm):
             'id': 'id_confirm_password',
         })
     )
-    
+    phone_number = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={"class":"phone_number","value":"","autocomplete":"off","tabindex":"-1"})
+    )
+    captcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox(
+            attrs={'class': 'form-input'} # You can pass custom classes if needed
+        )
+    )
+   
     class Meta:
         model = User
         fields =["fullname","username","email","password"]
@@ -93,15 +109,27 @@ class Register_form(forms.ModelForm):
     def clean(self):
         
         cleaned_data = super().clean()
+        honey_pot= cleaned_data.get("phone_number")
+        if honey_pot:
+            
+            x_forwarded_for = self.request_obj.META.get("HTTP_X_FORWARDED_FOR")
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0].strip()
+            else:
+                ip = self.request_obj.META.get("REMOTE_ADDR")
+            
+            cache.set(f"BANNED_IP_{ip}", True, 86400 * 7)
+            self.add_error("username",f" { cleaned_data.get('email') } :BOT flagged")
+
         password_val = cleaned_data.get("password")
         cnf_password_val = cleaned_data.get("confirm_password")
         email_val = cleaned_data.get("email")
         user_name = cleaned_data.get("username")
         full_name = cleaned_data.get("fullname")
         
-        if user_name.lower() in FORBIDDEN_USERNAMES:
+        if user_name and user_name.lower() in FORBIDDEN_USERNAMES:
             self.add_error("username","This username is not allowed")
-        if full_name.lower() in FORBIDDEN_USERNAMES:
+        if full_name and full_name.lower() in FORBIDDEN_USERNAMES:
             self.add_error("fullname","This name is not allowed")
         if password_val and cnf_password_val :
             if  (password_val != cnf_password_val):
@@ -135,6 +163,11 @@ class Login_form(forms.Form):
             'autocomplete': 'off', 
             'id': 'password',
         })
+    )
+    captcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox(
+            attrs={'class': 'form-input'}
+        )
     )
 
 

@@ -2,7 +2,7 @@ import json
 from django import forms
 from .models import Blog
 from django_ckeditor_5.widgets import CKEditor5Widget
-
+import nh3
 class CreateBlog(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         print(args)
@@ -66,4 +66,57 @@ class CreateBlog(forms.ModelForm):
             })
         }
 
- 
+    def clean_blog_content(self):
+        raw_html = self.cleaned_data.get('blog_content')
+
+        if not raw_html:
+            return raw_html
+
+
+        ckeditor_tags = {
+
+            'p', 'br', 'hr', 'span', 'div',
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'strong', 'b', 'em', 'i', 'u', 's', 'strike', 'sub', 'sup', 'mark',
+
+
+            'blockquote', 'pre', 'code',
+            'ul', 'ol', 'li',
+
+
+            'a',
+
+
+            'table', 'thead', 'tbody', 'tr', 'th', 'td', 'caption',
+
+
+            'img', 'figure', 'figcaption'
+        }
+
+
+        ckeditor_attributes = {
+
+            '*': {'class', 'style', 'dir', 'lang'},
+
+
+            'a': {'href', 'title', 'target', 'rel'},
+
+
+            'th': {'scope', 'rowspan', 'colspan'},
+            'td': {'rowspan', 'colspan'},
+
+            # Images
+            'img': {'src', 'alt', 'width', 'height', 'srcset'}
+        }
+
+
+        cleaned_html = nh3.clean(
+            raw_html,
+            tags=ckeditor_tags,
+            attributes=ckeditor_attributes,
+
+            url_schemes={'http', 'https', 'mailto'},
+            link_rel=None
+        )
+
+        return cleaned_html
